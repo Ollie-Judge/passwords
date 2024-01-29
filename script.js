@@ -3,49 +3,77 @@ const passwordInput = document.getElementById("passwordInput");
 const recomendationContainer = document.getElementById(
   "recomendationContainer"
 );
+const lowercaseContainer = document.getElementById("lowercaseContainer");
+const uppercaseContainer = document.getElementById("uppercaseContainer");
+const numberContainer = document.getElementById("numberContainer");
+const symbolContainer = document.getElementById("symbolContainer");
 
-const handlePasswordCriteria = () => {
-  const passwordProblems = checkPasswordStrength(passwordInput.value);
+let progressBarValue = 0;
 
-  let progressBarValue = 100;
+const recommendation = document.createElement("p");
 
-  passwordProblems.forEach((problem) => {
-    if (passwordProblems == null) return;
-    progressBarValue -= problem.progressBarReduction;
-    const recomendationItemContainer = document.createElement("div");
-    const recommendation = document.createElement("p");
+const checkUpperCase = () => {
+  if (/[A-Z]/g.test(passwordInput.value)) {
+    console.log("upper");
+    progressBarValue += 5;
+    console.log(progressBarValue);
+  } else {
+    //add these into different divs
+    uppercaseContainer.innerHTML = "add some uppercase letters";
+  }
+};
 
-    recommendation.textContent = problem.message;
+const checkLowerCase = () => {
+  if (/[a-z]/g.test(passwordInput.value)) {
+    console.log("lower");
+    progressBarValue += 2;
+    console.log(progressBarValue);
+  } else {
+    lowercaseContainer.innerHTML = "add some lowercase letters";
+  }
+};
 
-    recomendationItemContainer.appendChild(recommendation);
-    recomendationContainer.appendChild(recomendationItemContainer);
-  });
+const checkNumbers = () => {
+  if (/[0-9]/g.test(passwordInput.value)) {
+    console.log("number");
+    progressBarValue += 5;
+    console.log(progressBarValue);
+  } else {
+    numberContainer.innerHTML = "add some numbers";
+  }
+};
+
+const checkSymbols = () => {
+  if (/[^0-9a-zA-Z\s]/g.test(passwordInput.value)) {
+    console.log("symbol");
+    progressBarValue += 5;
+    console.log(progressBarValue);
+  } else {
+    symbolContainer.innerHTML = "add some symbols";
+  }
+};
+
+const checkLength = () => {
+  console.log(passwordInput.value.length);
+  if (passwordInput.value.length <= 1) {
+    recommendation.textContent = "too short";
+    recomendationContainer.appendChild(recommendation);
+    progressBarValue += 10;
+    console.log(progressBarValue);
+  } else {
+    recomendationContainer.innerHTML = "";
+  }
+};
+
+const check = () => {
+  if (passwordInput.value.length === 0) progressBarValue = 0;
+  checkLength();
+  checkLowerCase();
+  checkUpperCase();
+  checkNumbers();
+  checkSymbols();
+  progressBar.textContent = `${progressBarValue}%`;
   progressBar.value = progressBarValue;
 };
 
-passwordInput.addEventListener("input", handlePasswordCriteria);
-
-const checkPasswordStrength = (password) => {
-  const passwordProblems = [];
-  passwordProblems.push(lengthWeakness(password));
-  return passwordProblems;
-};
-
-const lengthWeakness = (password) => {
-  const length = password.length;
-
-  if (length <= 5) {
-    // maybe directly output the problem to the progress bar and recommendation div instead of store it in an array
-    return {
-      message: "increase the length of your password",
-      progressBarReduction: 80,
-    };
-  }
-
-  if (length <= 10) {
-    return {
-      message: "increase the length of your password",
-      progressBarReduction: 20,
-    };
-  }
-};
+passwordInput.addEventListener("input", check);
