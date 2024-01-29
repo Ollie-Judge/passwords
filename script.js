@@ -15,7 +15,7 @@ const recommendation = document.createElement("p");
 const checkUpperCase = () => {
   if (/[A-Z]/g.test(passwordInput.value)) {
     console.log("upper");
-    progressBarValue += 5;
+    progressBarValue += 2;
     console.log(progressBarValue);
   } else {
     //add these into different divs
@@ -36,7 +36,7 @@ const checkLowerCase = () => {
 const checkNumbers = () => {
   if (/[0-9]/g.test(passwordInput.value)) {
     console.log("number");
-    progressBarValue += 5;
+    progressBarValue += 2;
     console.log(progressBarValue);
   } else {
     numberContainer.innerHTML = "add some numbers";
@@ -46,7 +46,7 @@ const checkNumbers = () => {
 const checkSymbols = () => {
   if (/[^0-9a-zA-Z\s]/g.test(passwordInput.value)) {
     console.log("symbol");
-    progressBarValue += 5;
+    progressBarValue += 2;
     console.log(progressBarValue);
   } else {
     symbolContainer.innerHTML = "add some symbols";
@@ -58,7 +58,7 @@ const checkLength = () => {
   if (passwordInput.value.length <= 1) {
     recommendation.textContent = "too short";
     recomendationContainer.appendChild(recommendation);
-    progressBarValue += 10;
+    progressBarValue += 5;
     console.log(progressBarValue);
   } else {
     recomendationContainer.innerHTML = "";
