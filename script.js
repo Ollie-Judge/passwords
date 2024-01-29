@@ -9,10 +9,16 @@ const handlePasswordCriteria = () => {
 
   let progressBarValue = 100;
 
-  if (passwordProblems == null) return;
-
   passwordProblems.forEach((problem) => {
+    if (passwordProblems == null) return;
     progressBarValue -= problem.progressBarReduction;
+    const recomendationItemContainer = document.createElement("div");
+    const recommendation = document.createElement("p");
+
+    recommendation.textContent = problem.message;
+
+    recomendationItemContainer.appendChild(recommendation);
+    recomendationContainer.appendChild(recomendationItemContainer);
   });
   progressBar.value = progressBarValue;
 };
