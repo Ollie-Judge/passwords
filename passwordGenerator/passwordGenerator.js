@@ -1,3 +1,4 @@
+const characterAmountLabel = document.getElementById("characterAmountLabel");
 const numberOfCharactersSlider = document.getElementById(
   "numberOfCharactersSlider"
 );
@@ -6,7 +7,14 @@ const includeNumbers = document.getElementById("includeNumbers");
 const includeSymbols = document.getElementById("includeSymbols");
 const generateSubmitButton = document.getElementById("generateSubmitButton");
 
-generateSubmitButton.addEventListener("click", () => {
+const showCharacterAmount = () => {
+  characterAmountLabel.innerHTML = `Number of Characters: ${numberOfCharactersSlider.value}`;
+};
+
+numberOfCharactersSlider.addEventListener("input", showCharacterAmount);
+
+generateSubmitButton.addEventListener("click", (e) => {
+  e.preventDefault();
   console.log(numberOfCharactersSlider.value);
   if (!includeUppercase.checked) {
     console.log(false);
